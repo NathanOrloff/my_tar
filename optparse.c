@@ -46,8 +46,9 @@ Options parse(int argc, char *argv[]) {
 		}
 	}
 
+	opts.filepaths = (char **)malloc((argc - optind) * sizeof(char *));
 	int i = 0;
-	while (optind < argc && i < 10) {
+	while (optind < argc) {
 		opts.filepaths[i++] = argv[optind++];
 	}
 	opts.file_count = i;

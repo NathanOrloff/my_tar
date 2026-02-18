@@ -2,8 +2,10 @@
 #include <stdlib.h>
 
 #include "optparse.h"
+#include "create.h"
 
 int main(int argc, char *argv[]) {
+	int err = 0;
 	Options opts = parse(argc, argv);
 	
 	printf("file: %s\n", opts.archive_name);
@@ -16,5 +18,14 @@ int main(int argc, char *argv[]) {
 		printf("target: %s\n", opts.filepaths[i]);
 	}
 
-	return 0;
+	err = create_archive(opts.archive_name, opts.filepaths, opts.file_count);
+	if (err != 0) {
+		fprintf(stderr, "Error creating archive: %s\n", opts.archive_name);
+		goto FINALLY;
+	}
+
+
+FINALLY:
+	free(opts.filepaths);
+	return err;
 }

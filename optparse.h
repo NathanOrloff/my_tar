@@ -3,7 +3,7 @@
 
 typedef struct Options {
 	char *archive_name;
-	char *filepaths[10];
+	char **filepaths;
 	int file_count;
 	int cflag;
 	int xflag;
