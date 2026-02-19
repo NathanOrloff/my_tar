@@ -12,5 +12,6 @@ typedef struct Options {
 } Options;
 
 Options parse(int argc, char *argv[]);
+int validate_options(Options opts);
 
 #endif // __OPTPARSE_H__

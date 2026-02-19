@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <getopt.h>
@@ -56,11 +57,21 @@ Options parse(int argc, char *argv[]) {
 	return opts;
 }
 
-
-/* help:
- *
- * prints help message for user
- * */
-void help() {
-
+int validate_options(Options opts) {
+	if (opts.hflag) {
+		return 0;
+	}
+	if ((opts.cflag + opts.xflag + opts.tflag) > 1) {
+		fprintf(stderr, "Error only execute one operation at a time\n");
+		return -1;
+	}
+	if (opts.archive_name == NULL) {
+		fprintf(stderr, "Error missing target archive\n");
+		return -1;
+	}
+	if (opts.cflag && opts.file_count == 0) {
+		fprintf(stderr, "Error cannot create empty archive\n");
+		return -1;
+	}
+	return 0;
 }
